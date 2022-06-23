@@ -5,6 +5,44 @@ community.aws Release Notes
 .. contents:: Topics
 
 
+v3.4.0
+======
+
+Minor Changes
+-------------
+
+- aws_codebuild - add support for ``purge_tags`` parameter (https://github.com/ansible-collections/community.aws/pull/1221).
+- aws_codebuild - add the ``resource_tags`` parameter which takes the dictionary format for tags instead of the list of dictionaries format (https://github.com/ansible-collections/community.aws/pull/1221).
+- aws_codebuild - add the ``resource_tags`` return value which returns the standard dictionary format for tags instead of the list of dictionaries format (https://github.com/ansible-collections/community.aws/pull/1221).
+- aws_codebuild - the ``source`` and ``artifacts`` parameters are now optional unless creating a new project (https://github.com/ansible-collections/community.aws/pull/1221).
+- ecs_service - ``deployment_circuit_breaker`` has been added as a supported feature (https://github.com/ansible-collections/community.aws/pull/1215).
+- ecs_service - add ``service`` alias to address the ecs service name with the same parameter as the ecs_service_info module is doing (https://github.com/ansible-collections/community.aws/pull/1187).
+- ecs_service_info - add ``name`` alias to address the ecs service name with the same parameter as the ecs_service module is doing (https://github.com/ansible-collections/community.aws/pull/1187).
+- ecs_tag - ``resource_tags`` has been added as an alias for the ``tags`` parameter (https://github.com/ansible-collections/community.aws/pull/1184).
+- efs_tag - ``resource_tags`` has been added as an alias for the ``tags`` parameter (https://github.com/ansible-collections/community.aws/pull/1184).
+- rds_instance - add snapshot tests to test suite to test restoring db from snapshot (https://github.com/ansible-collections/community.aws/pull/1081).
+- rds_instance_info - add retries on common AWS failures (https://github.com/ansible-collections/community.aws/pull/1026).
+- wafv2_web_acl - relax botocore requirement to bare minimum required (https://github.com/ansible-collections/community.aws/pull/1216).
+
+Deprecated Features
+-------------------
+
+- aws_codebuild - The ``tags`` parameter currently uses a non-standard format and has been deprecated.  In release 6.0.0 this parameter will accept a simple key/value pair dictionary instead of the current list of dictionaries.  It is recommended to migrate to using the resource_tags parameter which already accepts the simple dictionary format (https://github.com/ansible-collections/community.aws/pull/1221).
+- route53_info - The CamelCase return values for ```HostedZones```, ```ResourceRecordSets```, and ```HealthChecks``` have been deprecated, in the future release you must use snake_case return values ```hosted_zones```, ```resource_record_sets```, and ```health_checks``` instead respectively".
+
+Bugfixes
+--------
+
+- aws_codebuild - fix bug where the result may be spuriously flagged as ``changed`` when multiple tags were set on the project (https://github.com/ansible-collections/community.aws/pull/1221).
+- ecs_service - fix broken change detect of ``health_check_grace_period_seconds`` parameter when not specified (https://github.com/ansible-collections/community.aws/pull/1212).
+- ecs_service - use default cluster name of ``default`` when not input (https://github.com/ansible-collections/community.aws/pull/1212).
+- ecs_task - dont require ``cluster`` and use name of ``default`` when not input (https://github.com/ansible-collections/community.aws/pull/1212).
+- lambda_info - fix bug that forces query=config when getting info for all lambdas. Now, if function name is specified, query will default to all.  This may have a performance impact when querying a large number of lambdas. If function name is not specified, query will default to config (https://github.com/ansible-collections/community.aws/pull/1152).
+- rds_instance - fix bugs associated with restoring db instance from snapshot (https://github.com/ansible-collections/community.aws/pull/1081).
+- wafv2_ip_set - fix bug where incorrect changed state was returned when only changing the description (https://github.com/ansible-collections/community.aws/pull/1211).
+- wafv2_web_acl - consistently return web ACL info as described in module documentation (https://github.com/ansible-collections/community.aws/pull/1216).
+- wafv2_web_acl - fix ``changed`` status when description not specified (https://github.com/ansible-collections/community.aws/pull/1216).
+
 v3.3.0
 ======
 
